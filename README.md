@@ -11,7 +11,7 @@ Finally, it was experimented with different hyperparameters to improve your mode
 
 This project has made use of the TensorFlow Object Detection API, where the model was deployed to get predictions on images sent to the API. Additionaly a short video of their model predictions was created to demonstrate the results.
 
-## Data
+## Set up
 
 For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/).
 
@@ -19,7 +19,7 @@ For this project, we will be using data from the [Waymo Open dataset](https://wa
 
 ## Structure
 
-### Data
+### Dataset
 
 The data you will use for training, validation and testing is organized as follow:
 ```
@@ -76,7 +76,7 @@ In the classroom workspace, every library and package should already be installe
 
 ## Instructions
 
-### Exploratory Data Analysis
+### Dataset Analysis
 
 Here I want to share the results of exploring the dataset using the `display_instances` function to display images and annotations using `matplotlib`. 
 
@@ -128,7 +128,7 @@ After moving the `pipeline_new.config` to the `/home/workspace/experiments/exper
 ```
 python experiments/model_main_tf2.py --model_dir=experiments/experiment0/ --pipeline_config_path=experiments/experiment0/pipeline_new.config
 ```
-Once the training is finished, the evaluation process can was launched:
+Once the training is finished, the evaluation process was launched:
 * an evaluation process:
 ```
 python experiments/model_main_tf2.py --model_dir=experiments/experiment0/ --pipeline_config_path=experiments/experiment0/pipeline_new.config --checkpoint_dir=experiments/experiment0/
@@ -141,11 +141,12 @@ To make you own traing just create another folder for the experiment (e.g. exper
 
 To monitor the training, it can be launched a tensorboard instance by running `python -m tensorboard.main --logdir experiments/experiment0/`.
 
-#### Improve on the reference
+#### Cross-validation
 
 The standard config file did not yield optimal results. 
 
 Improvement of data argumentations was taken as a strategy to improve the model and the appropriate changes were done to the config file based on the [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file that contains the different data augmentation method available in the Tf Object Detection API. 
+
 
 Some data argumentation strategies were visualized and tried in the notebook: `Explore augmentations.ipynb` to select the most optimal ones (i.e. random_horizontal_flip, random_crop_image, random_adjust_brightness, random_adjust_contrast, random_adjust_hue, random_adjust_saturation, random_distort_color). 
 
@@ -162,8 +163,9 @@ Here are a few examples:
 :-------------------------:|:-------------------------:
 | ![](images/Image_nocontrast.PNG)  |  ![](images/Image_notcolorful.PNG) |
 
-#### Reference experiment
-The traingn results were visualised on Tensorboard. Below we can observe the strong decrease in loss after the first 500 steps and the following gradual decrease during the next 2000 steps. The training was stopped at the 2500 as the loss plateaued.
+#### Reference experiment and improvement on reference
+
+The training results were visualised on Tensorboard. Below we can observe the strong decrease in loss after the first 500 steps and the following gradual decrease during the next 2000 steps. The training was stopped at the 2500 as the loss plateaued.
 
 The model training loss with augmentation :
 
