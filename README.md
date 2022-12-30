@@ -81,9 +81,9 @@ In the classroom workspace, every library and package should already be installe
 Here I want to share the results of exploring the dataset using the `display_instances` function to display images and annotations using `matplotlib`. 
 
 
-| ![](images/Image1.png)  |  ![](images/Image2.png) |
+| ![](images/Image1.PNG)  |  ![](images/Image2.PNG) |
 :-------------------------:|:-------------------------:
-| ![](images/Image3.png)  |  ![](images/Image4.png) |
+| ![](images/Image3.PNG)  |  ![](images/Image4.PNG) |
 
 It was observed that a lot of images were done at night, fog or rain. 
 
@@ -91,21 +91,21 @@ I also took a sample of 20.000 images and analysed their distribusion from diffe
 
 It was observed a dominance of car tags in the sample. Pedestrians are met a few times more rare in the dataset and there is almost no cyclists available. 
 
-    <img src="images/Distribution_tags_for_image.png" width=60% height=60%>
+    <img src="images/Distribution_tags_for_image.PNG" width=60% height=60%>
 
 It was also couted how frequent each tag is meat in images. This was done separately per each tag. 
 
 Here were also observed that it is quite common to meat multipe cars in the image. 
 
-    <img src="images/Distribution_tag1_per_image.png" width=60% height=60%>
+    <img src="images/Distribution_tag1_per_image.PNG" width=60% height=60%>
 
 In contrast it happens way less often by pedestrians. 
 
-    <img src="images/Distribution_tag2_per_image.png" width=60% height=60%>
+    <img src="images/Distribution_tag2_per_image.PNG" width=60% height=60%>
 
 There are not a lot of pictures with more than one cyclist.
 
-    <img src="images/Distribution_tag4_per_image.png" width=60% height=60%>
+    <img src="images/Distribution_tag4_per_image.PNG" width=60% height=60%>
 
 ### Edit of the config file
 
@@ -158,16 +158,16 @@ The final argumentations applied:
 
 Here are a few examples:
 
-| ![](images/Image_darkness.png)  |  ![](images/Image_night.png) |
+| ![](images/Image_darkness.PNG)  |  ![](images/Image_night.PNG) |
 :-------------------------:|:-------------------------:
-| ![](images/Image_nocontrast.png)  |  ![](images/Image_notcolorful.png) |
+| ![](images/Image_nocontrast.PNG)  |  ![](images/Image_notcolorful.PNG) |
 
 #### Reference experiment
 The traingn results were visualised on Tensorboard. Below we can observe the strong decrease in loss after the first 500 steps and the following gradual decrease during the next 2000 steps. The training was stopped at the 2500 as the loss plateaued.
 
 The model training loss with augmentation :
 
-    <img src="images/Loss.png" width=80% height=80%>
+    <img src="images/Loss.PNG" width=80% height=80%>
 
 The loss of the model with augmentation is lower that the loss of un-augmented model, what is an indicator of better performance. 
 
