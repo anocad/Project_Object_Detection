@@ -91,21 +91,21 @@ I also took a sample of 20.000 images and analysed their distribusion from diffe
 
 It was observed a dominance of car tags in the sample. Pedestrians are met a few times more rare in the dataset and there is almost no cyclists available. 
 
-    <img src="images/Distribution_tags_for_image.PNG" width=60% height=60%>
+![img](images/Distribution_tags_for_image.PNG)
 
 It was also couted how frequent each tag is meat in images. This was done separately per each tag. 
 
 Here were also observed that it is quite common to meat multipe cars in the image. 
 
-    <img src="images/Distribution_tag1_per_image.PNG" width=60% height=60%>
+![img1](images/Distribution_tag1_per_image.PNG)
 
 In contrast it happens way less often by pedestrians. 
 
-    <img src="images/Distribution_tag2_per_image.PNG" width=60% height=60%>
+![img2](images/Distribution_tag2_per_image.PNG)
 
 There are not a lot of pictures with more than one cyclist.
 
-    <img src="images/Distribution_tag4_per_image.PNG" width=60% height=60%>
+![img2](images/Distribution_tag4_per_image.PNG)
 
 ### Edit of the config file
 
@@ -167,9 +167,7 @@ The traingn results were visualised on Tensorboard. Below we can observe the str
 
 The model training loss with augmentation :
 
-    <img src="images/Loss.PNG" width=80% height=80%>
-
-![img](images/Loss.png)
+![img1](images/Loss.PNG)
 
 The loss of the model with augmentation is lower that the loss of un-augmented model, what is an indicator of better performance. 
 
