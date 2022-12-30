@@ -1,6 +1,6 @@
 # Object Detection in an Urban Environment
 
-## Intro
+## Project overview
 In this project it was created a convolutional neural network that allows to detect and classify objects in the urban environments (i.e. cyclists, pedestrians and vehicles) using the annotated data from Waymo.
 
 First, it was be performed an extensive data analysis including the computation of label distributions, display of sample images, and checking for object occlusions. This analysis has been used to decide what augmentations are meaningful for this project. 
@@ -30,7 +30,7 @@ The data you will use for training, validation and testing is organized as follo
     - test - contains 3 files to test your model and create inference videos
 ```
 The `training_and_validation` folder contains file that have been downsampled: we have selected one every 10 frames from 10 fps videos. The `testing` folder contains frames from the 10 fps video without downsampling.
-```
+
 You will split this `training_and_validation` data into `train`, and `val` sets by completing and executing the `create_splits.py` file.
 
 
@@ -117,35 +117,65 @@ The config files were edited to change the location of the training and validati
 ```
 python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 2 --checkpoint /home/workspace/experiments/pretrained_model/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map /home/workspace/experiments/label_map.pbtxt
 ```
-A new config file has been created, `pipeline_new.config`.
+A new config file has been created, `pipeline_new.config` and moved to experiment0 folder within experiments.
 
 ### Training
 
-You will now launch your very first experiment with the Tensorflow object detection API. Move the `pipeline_new.config` to the `/home/workspace/experiments/reference` folder. Now launch the training process:
+The experiment was conducted within `/home/workspace/experiments/experiment0` folder  with the Tensorflow object detection API. 
+
+After moving the `pipeline_new.config` to the `/home/workspace/experiments/experiment0` folder the training process was launch:
 * a training process:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/pipeline_new.config
+python experiments/model_main_tf2.py --model_dir=experiments/experiment0/ --pipeline_config_path=experiments/experiment0/pipeline_new.config
 ```
-Once the training is finished, launch the evaluation process:
+Once the training is finished, the evaluation process can was launched:
 * an evaluation process:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/pipeline_new.config --checkpoint_dir=experiments/reference/
+python experiments/model_main_tf2.py --model_dir=experiments/experiment0/ --pipeline_config_path=experiments/experiment0/pipeline_new.config --checkpoint_dir=experiments/experiment0/
 ```
 
-**Note**: Both processes will display some Tensorflow warnings, which can be ignored. You may have to kill the evaluation script manually using
+To make you own traing just create another folder for the experiment (e.g. experiment1) and repeat the above steps. 
+
+**Note**: Both processes can display some Tensorflow warnings, which can be ignored. You may have to kill the evaluation script manually using
 `CTRL+C`.
 
-To monitor the training, you can launch a tensorboard instance by running `python -m tensorboard.main --logdir experiments/reference/`. You will report your findings in the writeup.
+To monitor the training, it can be launched a tensorboard instance by running `python -m tensorboard.main --logdir experiments/experiment0/`.
 
-### Improve the performances
+#### Improve on the reference
 
-Most likely, this initial experiment did not yield optimal results. However, you can make multiple changes to the config file to improve this model. One obvious change consists in improving the data augmentation strategy. The [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file contains the different data augmentation method available in the Tf Object Detection API. To help you visualize these augmentations, we are providing a notebook: `Explore augmentations.ipynb`. Using this notebook, try different data augmentation combinations and select the one you think is optimal for our dataset. Justify your choices in the writeup.
+The standard config file did not yield optimal results. 
 
-Keep in mind that the following are also available:
-* experiment with the optimizer: type of optimizer, learning rate, scheduler etc
-* experiment with the architecture. The Tf Object Detection API [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) offers many architectures. Keep in mind that the `pipeline.config` file is unique for each architecture and you will have to edit it.
+Improvement of data argumentations was taken as a strategy to improve the model and the appropriate changes were done to the config file based on the [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file that contains the different data augmentation method available in the Tf Object Detection API. 
 
-**Important:** If you are working on the workspace, your storage is limited. You may to delete the checkpoints files after each experiment. You should however keep the `tf.events` files located in the `train` and `eval` folder of your experiments. You can also keep the `saved_model` folder to create your videos.
+Some data argumentation strategies were visualized and tried in the notebook: `Explore augmentations.ipynb` to select the most optimal ones (i.e. random_horizontal_flip, random_crop_image, random_adjust_brightness, random_adjust_contrast, random_adjust_hue, random_adjust_saturation, random_distort_color). 
+
+The final argumentations applied:
+- contrast values were set between 0.5 and 1.0
+- brightness was set to 0.2
+- hue was adjusted
+- color was adjusted
+- saturation was adjusted
+
+Here are a few examples:
+
+| ![](images/Image_darkness.png)  |  ![](images/Image_night.png) |
+:-------------------------:|:-------------------------:
+| ![](images/Image_nocontrast.png)  |  ![](images/Image_notcolorful.png) |
+
+#### Reference experiment
+The traingn results were visualised on Tensorboard. Below we can observe the strong decrease in loss after the first 500 steps and the following gradual decrease during the next 2000 steps. The training was stopped at the 2500 as the loss plateaued.
+
+The model training loss with augmentation :
+
+    <img src="images/Loss.png" width=80% height=80%>
+
+The loss of the model with augmentation is lower that the loss of un-augmented model, what is an indicator of better performance. 
+
+Future experiments on model improvement might inlude the following elements (due to limited GPU resources in the classroom this was not possible to implement):
+- Increase of the samples containg pedestrians, cyclists that are underrepreseted in the current dataset
+- Training with more epochs
+- Experimenting with change of other hyperparaments (rate decay, warmup learning rate etc.)
+- Experimenting with other models (e.g. RNN)
 
 
 ### Creating an animation
